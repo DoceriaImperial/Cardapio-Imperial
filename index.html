@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padrão Imperial | A Nobreza do Chocolate</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --ouro: #D4AF37;
@@ -18,229 +19,80 @@
             margin: 0;
             font-family: 'Poppins', sans-serif;
             background-color: var(--preto);
+            /* Degradê sutil no rodapé */
+            background: linear-gradient(to bottom, var(--preto) 85%, #1a1500 100%);
             color: #fff;
             overflow-x: hidden;
             position: relative;
+            padding-bottom: 120px;
         }
 
-        /* FUNDO QUADRICULADO COM COSTURA DOURADA EM DEGRADÊ */
+        /* FUNDO COSTURA DOURADA QUADRICULADA */
         body::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Cria o efeito de costura pontilhada (estilo ponto de sela) */
+            top: 0; left: 0; width: 100%; height: 100%;
             background-image: 
                 linear-gradient(to right, var(--ouro) 1px, transparent 1px),
                 linear-gradient(to bottom, var(--ouro) 1px, transparent 1px);
-            background-size: 60px 60px; /* Tamanho do quadrado */
-            /* Transforma a linha sólida em pontilhada/costura */
+            background-size: 60px 60px;
             mask-image: 
-                linear-gradient(to bottom, 
-                    black 0%, 
-                    rgba(0,0,0,0.6) 30%, 
-                    rgba(0,0,0,0.1) 60%, 
-                    transparent 90%),
+                linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.1) 60%, transparent 95%),
                 repeating-linear-gradient(0deg, black, black 4px, transparent 4px, transparent 8px),
                 repeating-linear-gradient(90deg, black, black 4px, transparent 4px, transparent 8px);
             -webkit-mask-image: 
-                linear-gradient(to bottom, 
-                    black 0%, 
-                    rgba(0,0,0,0.6) 30%, 
-                    rgba(0,0,0,0.1) 60%, 
-                    transparent 90%),
+                linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.1) 60%, transparent 95%),
                 repeating-linear-gradient(0deg, black, black 4px, transparent 4px, transparent 8px),
                 repeating-linear-gradient(90deg, black, black 4px, transparent 4px, transparent 8px);
-            opacity: 0.25;
+            opacity: 0.20;
             z-index: -1;
             pointer-events: none;
         }
 
-        header {
-            height: 55vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
+        header { height: 45vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        .logo { width: 150px; margin-bottom: 20px; animation: float 5s ease-in-out infinite; filter: drop-shadow(0 0 25px var(--ouro-glow)); }
+        h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 8vw, 3.2rem); margin: 0; background: linear-gradient(to bottom, #fff, var(--ouro)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; }
+        .slogan { font-family: 'Playfair Display', serif; font-style: italic; color: var(--ouro); margin-top: 5px; letter-spacing: 2px; }
 
-        .logo {
-            width: 170px;
-            margin-bottom: 20px;
-            animation: float 5s ease-in-out infinite;
-            filter: drop-shadow(0 0 25px var(--ouro-glow));
-        }
+        .container { max-width: 1100px; margin: -20px auto 60px; padding: 0 20px; }
+        .grid-produtos { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.2rem, 8vw, 3.8rem);
-            margin: 0;
-            background: linear-gradient(to bottom, #fff, var(--ouro));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 5px;
-            font-weight: 700;
-        }
+        .produto-card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.15); transition: 0.4s; cursor: pointer; backdrop-filter: blur(8px); }
+        .produto-card:hover { transform: translateY(-10px); border-color: var(--ouro); box-shadow: 0 15px 45px rgba(0,0,0,0.8); }
+        .img-container { height: 380px; overflow: hidden; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: 1s; }
+        .produto-card:hover .img-container img { transform: scale(1.05); }
+        .detalhes { padding: 20px; background: linear-gradient(to top, #000 80%, transparent); }
+        .detalhes h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--ouro); margin: 0; }
+        .btn-premium { background: var(--ouro); color: #000; padding: 12px 25px; border-radius: 8px; font-weight: 700; text-transform: uppercase; border: none; cursor: pointer; font-size: 0.8rem; }
 
-        .slogan {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: var(--ouro);
-            font-size: 1.1rem;
-            margin-top: 10px;
-            letter-spacing: 2px;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: -40px auto 100px;
-            padding: 0 20px;
-            z-index: 2;
-        }
-
-        .grid-produtos {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 35px;
-        }
-
-        .produto-card {
-            background: var(--bg-card);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            cursor: pointer;
-            backdrop-filter: blur(8px);
-        }
-
-        .produto-card:hover {
-            transform: translateY(-12px);
-            border-color: var(--ouro);
-            box-shadow: 0 15px 45px rgba(0,0,0,0.8), 0 0 15px var(--ouro-glow);
-        }
-
-        .img-container {
-            height: 380px;
-            overflow: hidden;
-        }
-
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 1s ease;
-        }
-
-        .produto-card:hover .img-container img {
-            transform: scale(1.08);
-        }
-
-        .detalhes {
-            padding: 25px;
-            background: linear-gradient(to top, #000 70%, transparent);
-        }
-
-        .detalhes h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--ouro);
-            margin: 0;
-        }
-
-        .price-tag {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn-premium {
-            background: var(--ouro);
-            color: #000;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px var(--ouro-glow);
-        }
-
-        .btn-premium:hover {
-            background: #fff;
-            transform: scale(1.03);
-        }
-
-        /* MODAL */
-        .modal {
-            display: none;
+        .social-bar {
             position: fixed;
-            inset: 0;
-            z-index: 999;
-            background: rgba(0,0,0,0.96);
-            backdrop-filter: blur(12px);
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .modal-content {
-            background: #0a0a0a;
-            max-width: 480px;
-            margin: 30px auto;
-            border-radius: 25px;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 12px 25px;
+            border-radius: 50px;
             border: 1px solid var(--ouro);
-            padding: 35px;
-            text-align: center;
-            position: relative;
+            display: flex;
+            gap: 25px;
+            z-index: 1000;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
         }
 
-        .input-group {
-            margin-bottom: 18px;
-            text-align: left;
-        }
+        .social-bar a { color: #fff; font-size: 1.4rem; transition: 0.3s; text-decoration: none; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .social-bar a span { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .social-bar a:hover { color: var(--ouro); transform: scale(1.05); }
 
-        .input-group label {
-            color: var(--ouro);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
+        .modal { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); padding: 20px; }
+        .modal-content { background: #0a0a0a; max-width: 420px; margin: 20px auto; border-radius: 25px; border: 1px solid var(--ouro); padding: 30px; text-align: center; position: relative; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group label { color: var(--ouro); font-size: 0.65rem; text-transform: uppercase; font-weight: 600; }
+        .input-group input { width: 100%; background: #151515; border: 1px solid #333; padding: 12px; border-radius: 10px; color: #fff; margin-top: 5px; box-sizing: border-box; font-family: inherit; }
 
-        .input-group input {
-            width: 100%;
-            background: #151515;
-            border: 1px solid #333;
-            padding: 14px;
-            border-radius: 10px;
-            color: #fff;
-            margin-top: 6px;
-            font-family: inherit;
-            box-sizing: border-box;
-        }
-
-        .input-group input:focus {
-            border-color: var(--ouro);
-            outline: none;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        @media (max-width: 768px) {
-            header { height: 45vh; }
-            h1 { letter-spacing: 2px; }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
     </style>
 </head>
 <body>
@@ -248,123 +100,112 @@
 <header>
     <img src="logo.png" class="logo" alt="Padrão Imperial">
     <h1>PADRÃO IMPERIAL</h1>
-    <p class="slogan">Se delicie sem moderação 👑</p>
+    <p class="slogan">Onde o cacau encontra a nobreza 👑</p>
 </header>
 
 <div class="container">
     <div class="grid-produtos">
-        <div class="produto-card" onclick="abrirModal('brigadeiro.jpg', 'Brigadeiro Belga', 'Feito com chocolate premium e granulado puro cacau.')">
-            <div class="img-container">
-                <img src="brigadeiro.jpg" alt="Brigadeiro">
-            </div>
+        <div class="produto-card" onclick="abrirModal('brigadeiro.jpg', 'Brigadeiro Belga', 'Intensidade em cada camada de puro cacau.')">
+            <div class="img-container"><img src="brigadeiro.jpg"></div>
             <div class="detalhes">
                 <h3>Brigadeiro Belga</h3>
-                <div class="price-tag">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
                     <span>R$ 6,00</span>
-                    <button class="btn-premium">Pedir</button>
+                    <button class="btn-premium">Escolher ✨</button>
                 </div>
             </div>
         </div>
-
-        <div class="produto-card" onclick="abrirModal('maracuja.jpg', 'Maracujá Imperial', 'Polpa natural da fruta em um recheio extremamente cremoso.')">
-            <div class="img-container">
-                <img src="maracuja.jpg" alt="Maracujá">
-            </div>
+        <div class="produto-card" onclick="abrirModal('maracuja.jpg', 'Maracujá Imperial', 'O frescor da fruta com a cremosidade do reino.')">
+            <div class="img-container"><img src="maracuja.jpg"></div>
             <div class="detalhes">
-                <h3>Maracujá Tropical</h3>
-                <div class="price-tag">
+                <h3>Maracujá Imperial</h3>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
                     <span>R$ 6,00</span>
-                    <button class="btn-premium">Pedir</button>
+                    <button class="btn-premium">Escolher ✨</button>
                 </div>
             </div>
         </div>
-
-        <div class="produto-card" onclick="abrirModal('beijinho.jpg', 'Beijinho Sublime', 'A combinação perfeita de coco selecionado e leite condensado nobre.')">
-            <div class="img-container">
-                <img src="beijinho.jpg" alt="Beijinho">
-            </div>
+        <div class="produto-card" onclick="abrirModal('beijinho.jpg', 'Beijinho Sublime', 'Delicadeza em flocos de coco e doçura real.')">
+            <div class="img-container"><img src="beijinho.jpg"></div>
             <div class="detalhes">
-                <h3>Beijinho Imperial</h3>
-                <div class="price-tag">
+                <h3>Beijinho Sublime</h3>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
                     <span>R$ 6,00</span>
-                    <button class="btn-premium">Pedir</button>
+                    <button class="btn-premium">Escolher ✨</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="social-bar">
+    <a href="https://www.instagram.com/chocolateria.padrao.imperial" target="_blank">
+        <i class="fab fa-instagram"></i> <span>Instagram</span>
+    </a>
+    <a onclick="enviarDuvida()">
+        <i class="fab fa-whatsapp"></i> <span>Dúvidas</span>
+    </a>
 </div>
 
 <div id="modalCheckout" class="modal">
     <div class="modal-content">
         <span onclick="fecharModal()" style="position: absolute; right: 20px; top: 10px; cursor: pointer; color: var(--ouro); font-size: 2rem;">&times;</span>
         <h2 id="m-nome" style="font-family: 'Playfair Display'; color: var(--ouro); margin: 0;"></h2>
-        <p id="m-desc" style="font-size: 0.85rem; color: #777; margin-bottom: 20px;"></p>
+        <p id="m-desc" style="font-size: 0.8rem; color: #777; margin-bottom: 15px;"></p>
 
-        <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 25px;">
+        <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px;">
             <button onclick="mudarQtd(-1)" style="background:none; border:1px solid var(--ouro); color:var(--ouro); width:35px; height:35px; border-radius:50%; cursor:pointer;">-</button>
             <span id="m-qtd" style="font-size: 1.4rem; font-weight: 600;">1</span>
             <button onclick="mudarQtd(1)" style="background:none; border:1px solid var(--ouro); color:var(--ouro); width:35px; height:35px; border-radius:50%; cursor:pointer;">+</button>
         </div>
 
-        <div class="input-group">
-            <label>Seu Nome</label>
-            <input type="text" id="c-nome" placeholder="Como deseja ser chamado(a)?">
-        </div>
-        <div class="input-group">
-            <label>Endereço</label>
-            <input type="text" id="c-rua" placeholder="Rua, número e bairro">
-        </div>
-        <div class="input-group">
-            <label>Referência</label>
-            <input type="text" id="c-ref" placeholder="Ex: Perto do mercado X">
-        </div>
+        <div class="input-group"><label>Seu Nome</label><input type="text" id="c-nome" placeholder="Como deseja ser chamado(a)?"></div>
+        <div class="input-group"><label>Endereço de Entrega</label><input type="text" id="c-rua" placeholder="Rua, número e bairro"></div>
+        <div class="input-group"><label>Referência</label><input type="text" id="c-ref" placeholder="Perto de onde?"></div>
 
-        <button class="btn-premium" style="width: 100%;" onclick="finalizarPedido()">Confirmar Pedido 👑</button>
+        <button class="btn-premium" style="width: 100%;" onclick="finalizarPedido()">Reservar meu momento 👑</button>
     </div>
 </div>
 
 <script>
-    let currentProd = "";
-    let currentQtd = 1;
+    const FONE_WHATS = "5567992648892";
+    let currentProd = ""; let currentQtd = 1;
 
     function abrirModal(img, nome, desc) {
-        currentProd = nome;
-        currentQtd = 1;
+        currentProd = nome; currentQtd = 1;
         document.getElementById('m-nome').innerText = nome;
         document.getElementById('m-desc').innerText = desc;
         document.getElementById('m-qtd').innerText = currentQtd;
         document.getElementById('modalCheckout').style.display = 'block';
     }
 
-    function fecharModal() {
-        document.getElementById('modalCheckout').style.display = 'none';
+    function fecharModal() { document.getElementById('modalCheckout').style.display = 'none'; }
+    function mudarQtd(v) { currentQtd += v; if(currentQtd < 1) currentQtd = 1; document.getElementById('m-qtd').innerText = currentQtd; }
+
+    // FUNÇÃO PARA DÚVIDAS (Blindagem de Emojis)
+    function enviarDuvida() {
+        const msg = "👋 Olá! Vi o site da Padrão Imperial e fiquei encantado(a) com os detalhes! 🥳\n\n🍫 Gostaria de receber o cardápio completo e conhecer mais sobre as experiências disponíveis. Pode me ajudar? ✨";
+        window.open(`https://wa.me/${FONE_WHATS}?text=${encodeURIComponent(msg)}`);
     }
 
-    function mudarQtd(v) {
-        currentQtd += v;
-        if(currentQtd < 1) currentQtd = 1;
-        document.getElementById('m-qtd').innerText = currentQtd;
-    }
-
+    // FUNÇÃO PARA PEDIDO (Blindagem de Emojis)
     function finalizarPedido() {
-        const nome = document.getElementById('c-nome').value;
+        const nomeCliente = document.getElementById('c-nome').value;
         const rua = document.getElementById('c-rua').value;
         const ref = document.getElementById('c-ref').value;
 
-        if(!nome || !rua) {
-            alert("Por favor, preencha os dados de entrega.");
-            return;
-        }
+        if(!nomeCliente || !rua) { alert("Por favor, preencha os dados de entrega."); return; }
 
-        const fone = "5567992648892";
-        const texto = `👑 *PEDIDO PADRÃO IMPERIAL* 👑\n\n` +
-                      `*Item:* ${currentQtd}x ${currentProd}\n\n` +
-                      `📍 *ENTREGA*\n` +
-                      `*Nome:* ${nome}\n` +
-                      `*Endereço:* ${rua}\n` +
-                      `*Ref:* ${ref}`;
+        const texto = `👑 *PEDIDO IMPERIAL CONFIRMADO* 👑\n\n` +
+                      `Olá! Me chamo *${nomeCliente}* e decidi me presentear com uma experiência do seu site! 😍\n\n` +
+                      `🛒 *Meu Pedido:* \n` +
+                      `➔ ${currentQtd}x ${currentProd} ✨\n\n` +
+                      `📍 *Local de Entrega:* \n` +
+                      `➔ ${rua}\n` +
+                      `➔ Ref: ${ref}\n\n` +
+                      `Estou aguardando ansiosamente por esse momento doce! 🍫👑`;
         
-        window.open(`https://wa.me/${fone}?text=${encodeURIComponent(texto)}`);
+        window.open(`https://wa.me/${FONE_WHATS}?text=${encodeURIComponent(texto)}`);
     }
 
     window.onclick = function(e) { if(e.target.className == 'modal') fecharModal(); }
