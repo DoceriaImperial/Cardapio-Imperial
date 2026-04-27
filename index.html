@@ -48,7 +48,7 @@
 
         .produto-card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.1); position: relative; cursor: pointer; transition: transform 0.3s ease; }
         .produto-card:hover { transform: scale(1.05); }
-        .produto-card:hover .img-container img { transform: translateY(calc(var(--scroll-y, 0px) - 10px)) scale(1.1); }
+        .produto-card:hover .img-container img { transform: translateY(calc(var(--scroll-y, 0px) - 10px)); }
         .produto-card.bounce { animation: bounce 0.5s ease; }
         .produto-card.bounce .img-container img { animation: imgBounce 0.5s ease; }
         .img-container { height: 280px; overflow: hidden; }
@@ -145,12 +145,52 @@
                 <button class="btn-add" onclick="event.stopPropagation(); animarEAdicionar(this, 'Beijinho Sublime', 'beijinho')">Adicionar ✨</button>
             </div>
         </div>
+
+        <div class="produto-card" onclick="animarProduto(this)">
+            <div class="img-container"><img src="limão.jpeg"></div>
+            <div class="detalhes">
+                <h3>Limão Imperial</h3>
+                <div class="controles-qtd">
+                    <button class="btn-qtd" onclick="event.stopPropagation(); alterarQtdCard('limao', -1)">-</button>
+                    <span class="qtd-num" id="qtd-limao">1</span>
+                    <button class="btn-qtd" onclick="event.stopPropagation(); alterarQtdCard('limao', 1)">+</button>
+                </div>
+                <button class="btn-add" onclick="event.stopPropagation(); animarEAdicionar(this, 'Limão Imperial', 'limao')">Adicionar ✨</button>
+            </div>
+        </div>
+
+        <div class="produto-card" onclick="animarProduto(this)">
+            <div class="img-container"><img src="ninho.jpeg"></div>
+            <div class="detalhes">
+                <h3>Ninho Imperial</h3>
+                <div class="controles-qtd">
+                    <button class="btn-qtd" onclick="event.stopPropagation(); alterarQtdCard('ninho', -1)">-</button>
+                    <span class="qtd-num" id="qtd-ninho">1</span>
+                    <button class="btn-qtd" onclick="event.stopPropagation(); alterarQtdCard('ninho', 1)">+</button>
+                </div>
+                <button class="btn-add" onclick="event.stopPropagation(); animarEAdicionar(this, 'Ninho Imperial', 'ninho')">Adicionar ✨</button>
+            </div>
+        </div>
+
+        <div class="produto-card" onclick="animarProduto(this)">
+            <div class="img-container"><img src="capuccino.jpeg"></div>
+            <div class="detalhes">
+                <h3>Capuccino Imperial</h3>
+                <div class="controles-qtd">
+                    <button class="btn-qtd" onclick="event.stopPropagation(); alterarQtdCard('capuccino', -1)">-</button>
+                    <span class="qtd-num" id="qtd-capuccino">1</span>
+                    <button class="btn-qtd" onclick="event.stopPropagation(); alterarQtdCard('capuccino', 1)">+</button>
+                </div>
+                <button class="btn-add" onclick="event.stopPropagation(); animarEAdicionar(this, 'Capuccino Imperial', 'capuccino')">Adicionar ✨</button>
+            </div>
+        </div>
+
     </div>
 </div>
 
 <div class="social-bar">
     <a href="https://www.instagram.com/chocolateria.padrao.imperial" target="_blank"><i class="fab fa-instagram"></i> <span>Instagram</span></a>
-    <a href="https://w.app/padraoimperial" target="_blank"><i class="fab fa-whatsapp"></i> <span>Dúvidas</span></a>
+    <a href="https://api.whatsapp.com/send?phone=5567992648892&text=%F0%9F%91%8B%20Ol%C3%A1!%20Vi%20o%20site%20da%20Padr%C3%A3o%20Imperial%20e%20fiquei%20encantado(a)%20com%20os%20detalhes!%20%F0%9F%A5%B3%0A%0A%F0%9F%8D%AB%20Gostaria%20de%20receber%20o%20card%C3%A1pio%20completo%20e%20conhecer%20mais%20sobre%20as%20experiências%20disponíveis.%20Pode%20me%20ajudar?%20%E2%9C%A8" target="_blank"><i class="fab fa-whatsapp"></i> <span>Dúvidas</span></a>
 </div>
 
 <div id="modalCarrinho" class="modal">
@@ -276,7 +316,7 @@
         const imgs = document.querySelectorAll('.img-container img');
         const scrollY = window.scrollY;
         imgs.forEach(img => {
-            img.style.setProperty('--scroll-y', `${scrollY * 0.05}px`);
+            img.style.setProperty('--scroll-y', `${-scrollY * 0.05}px`);
         });
     });
 </script>
