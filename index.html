@@ -87,6 +87,13 @@
         .input-group textarea { height: 80px; resize: none; }
         .help-text { font-size: 0.7rem; color: #666; margin-top: 4px; font-style: italic; }
 
+        .modal-imagem { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.98); backdrop-filter: blur(15px); padding: 20px; overflow: auto; align-items: center; justify-content: center; }
+        .modal-imagem.ativo { display: flex; }
+        .modal-imagem-content { position: relative; max-width: 90vw; max-height: 90vh; }
+        .modal-imagem img { width: 100%; height: auto; border-radius: 20px; box-shadow: 0 0 50px var(--ouro-glow); }
+        .modal-imagem-close { position: absolute; top: -50px; right: 0; color: var(--ouro); font-size: 3rem; cursor: pointer; background: none; border: none; }
+        .img-container img { cursor: pointer; }
+
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes bounce { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         @keyframes imgBounce { 0% { transform: scale(1); } 50% { transform: scale(0.9); } 100% { transform: scale(1); } }
@@ -106,9 +113,15 @@
 </header>
 
 <div class="container">
+    <div id="modalImagem" class="modal-imagem" onclick="fecharImagemModal(event)">
+        <div class="modal-imagem-content" onclick="event.stopPropagation()">
+            <button class="modal-imagem-close" onclick="fecharImagemModal()">&times;</button>
+            <img id="imagemAmpliada" src="" alt="Imagem ampliada">
+        </div>
+    </div>
     <div class="grid-produtos">
         <div class="produto-card" onclick="animarProduto(this)">
-            <div class="img-container"><img src="brigadeiro.jpg"></div>
+            <div class="img-container"><img src="brigadeiro.jpg" onclick="event.stopPropagation(); abrirImagemModal(this.src)"></div>
             <div class="detalhes">
                 <h3>Brigadeiro Belga</h3>
                 <p style="color: var(--ouro); font-weight: 600; margin: 5px 0;">R$ 6,00</p>
@@ -122,7 +135,7 @@
         </div>
 
         <div class="produto-card" onclick="animarProduto(this)">
-            <div class="img-container"><img src="maracuja.jpg"></div>
+            <div class="img-container"><img src="maracuja.jpg" onclick="event.stopPropagation(); abrirImagemModal(this.src)"></div>
             <div class="detalhes">
                 <h3>Maracujá Imperial</h3>
                 <p style="color: var(--ouro); font-weight: 600; margin: 5px 0;">R$ 6,00</p>
@@ -136,7 +149,7 @@
         </div>
 
         <div class="produto-card" onclick="animarProduto(this)">
-            <div class="img-container"><img src="beijinho.jpg"></div>
+            <div class="img-container"><img src="beijinho.jpg" onclick="event.stopPropagation(); abrirImagemModal(this.src)"></div>
             <div class="detalhes">
                 <h3>Beijinho Sublime</h3>
                 <p style="color: var(--ouro); font-weight: 600; margin: 5px 0;">R$ 6,00</p>
@@ -150,7 +163,7 @@
         </div>
 
         <div class="produto-card" onclick="animarProduto(this)">
-            <div class="img-container"><img src="limão.jpeg"></div>
+            <div class="img-container"><img src="limão.jpeg" onclick="event.stopPropagation(); abrirImagemModal(this.src)"></div>
             <div class="detalhes">
                 <h3>Limão Imperial</h3>
                 <p style="color: var(--ouro); font-weight: 600; margin: 5px 0;">R$ 6,00</p>
@@ -164,7 +177,7 @@
         </div>
 
         <div class="produto-card" onclick="animarProduto(this)">
-            <div class="img-container"><img src="ninho.jpeg"></div>
+            <div class="img-container"><img src="ninho.jpeg" onclick="event.stopPropagation(); abrirImagemModal(this.src)"></div>
             <div class="detalhes">
                 <h3>Ninho Imperial</h3>
                 <p style="color: var(--ouro); font-weight: 600; margin: 5px 0;">R$ 6,00</p>
@@ -178,7 +191,7 @@
         </div>
 
         <div class="produto-card" onclick="animarProduto(this)">
-            <div class="img-container"><img src="capuccino.jpeg"></div>
+            <div class="img-container"><img src="capuccino.jpeg" onclick="event.stopPropagation(); abrirImagemModal(this.src)"></div>
             <div class="detalhes">
                 <h3>Capuccino Imperial</h3>
                 <p style="color: var(--ouro); font-weight: 600; margin: 5px 0;">R$ 6,00</p>
@@ -317,6 +330,23 @@
     }
 
     window.onclick = function(e) { if(e.target.className == 'modal') fecharCarrinho(); }
+
+    function abrirImagemModal(src) {
+        const modal = document.getElementById('modalImagem');
+        const img = document.getElementById('imagemAmpliada');
+        img.src = src;
+        modal.classList.add('ativo');
+    }
+
+    function fecharImagemModal(event) {
+        if(event && event.target.id !== 'modalImagem') return;
+        const modal = document.getElementById('modalImagem');
+        modal.classList.remove('ativo');
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape') fecharImagemModal();
+    });
 
     window.addEventListener('scroll', () => {
         const imgs = document.querySelectorAll('.img-container img');
